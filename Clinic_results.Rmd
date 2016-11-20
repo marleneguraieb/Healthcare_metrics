@@ -19,9 +19,15 @@ ResultsBYclin<-ddply(ATEbyNurse, .(ExpectedUnitAtTMT),
 
 ```
 
-You can also embed plots, for example:
+Now I merge this with other data from clinics (from TMTstats). 
 
-```{r, echo=FALSE}
-plot(cars)
+```{r}
+ClinResults<-merge(TMTstats,ResultsBYclin,by.x="unidadmedica",by.y="ExpectedUnitAtTMT")
+```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+# You can also embed plots, for example:
+# 
+# ```{r, echo=FALSE}
+# plot(cars)
+# 
+# Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
