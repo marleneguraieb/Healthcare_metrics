@@ -1,0 +1,27 @@
+---
+title: "Clinic_results"
+output: html_document
+---
+
+
+```{r}
+ResultsBYclin<-ddply(ATEbyNurse, .(ExpectedUnitAtTMT),   
+                       function(x) data.frame(Said1or2Lab0_Said1_diff2014=weighted.mean(x$Said1or2Lab0_Said1_diff2014, x$numcons2014,na.rm=TRUE),
+                                              Said0LabNo_Toc_diff2014=weighted.mean(x$Said0LabNo_Toc_diff2014, x$numcons2014,na.rm=TRUE),
+                                              Said9LabNo_numcons_diff2014=weighted.mean(x$Said9LabNo_numcons_diff2014, x$numcons2014,na.rm=TRUE),
+                                              Grade1_diff2014=weighted.mean(x$Grade1_diff2014, x$numcons2014,na.rm=TRUE),
+                                              Said1or2Lab0_Said1_diff14_13=weighted.mean(x$Said1or2Lab0_Said1_diff13_14, x$numcons2014,na.rm=TRUE),
+                                              Said0LabNo_Toc_diff14_13=weighted.mean(x$Said0LabNo_Toc_diff13_14, x$numcons2014,na.rm=TRUE),
+                                              Said9LabNo_numcons_diff14_13=weighted.mean(x$Said9LabNo_numcons_diff13_14, x$numcons2014,na.rm=TRUE),
+                                              Grade1_diff14_13=weighted.mean(x$Grade1_diff13_14, x$numcons2014,na.rm=TRUE),
+                                              numcons2014=sum(x$numcons2014,na.rm=TRUE),
+                                              numnurse2014=length(unique(x$matricula))))
+
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
