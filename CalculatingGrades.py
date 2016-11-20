@@ -55,11 +55,12 @@ t_1_2013 = [cols.index(s) for s in cols if 't_1_2013' in s]
 t_0_2014 = [cols.index(s) for s in cols if 't_0_2014' in s]
 t_1_2014 = [cols.index(s) for s in cols if 't_1_2014' in s]
 
-for i in range(1,5):
+
+for i in range(0,5):
     ATEbyNurse[ATEbyNurse.columns.tolist()[t_0_2013[i]].replace('_t_0_2013',
-    '_Dif2013')] = ATEbyNurse.ix[:,t_1_2013[i]-t_0_2013[i]]
+    '_Dif2013')] = ATEbyNurse.ix[:,t_1_2013[i]]-ATEbyNurse.ix[:,t_0_2013[i]]
     ATEbyNurse[ATEbyNurse.columns.tolist()[t_0_2014[i]].replace('_t_0_2014',
-    '_Dif2014')] = ATEbyNurse.ix[:,t_1_2014[i]-t_0_2014[i]]
+    '_Dif2014')] = ATEbyNurse.ix[:,t_1_2014[i]]-ATEbyNurse.ix[:,t_0_2014[i]]
 
 cols = ATEbyNurse.columns.values.tolist()
 values = ['Grade1','Said1or2Lab0_Said1','Said9LabNo_cons','Said0LabNo_Toc']
@@ -82,6 +83,8 @@ ResultsbyClin = ATEbyNurse[['ExpectedUnitAtTMT','Grade1_Dif2014', 'Said1or2Lab0_
            
 # Define a lambda function to compute the weighted mean:
 wm = lambda x: np.average(x.fillna(0), weights=ATEbyNurse.loc[x.index, 'NumCons2014'].fillna(0))
+wm = lambda x: np.average(ATEbyNurse.ix[~np.isnan(ATEbyNurse.ix[:,x]),x],
+                          weights=ATEbyNurse.ix[~np.isnan(ATEbyNurse.ix[:,x]),'NumCons2014'].fillna(0))
 
 # Define a dictionary with the functions to apply for a given column:
 f = {'Grade1_Dif2014': {'weighted_mean': wm}, 
@@ -94,7 +97,7 @@ f = {'Grade1_Dif2014': {'weighted_mean': wm},
      'Said0LabNo_Toc_d13_14': {'weighted_mean': wm}}
 
 # Groupby and aggregate with your dictionary:
-ATEbyNurse.groupby(['ExpectedUnitAtTMT']).agg(f)
+ResultsBYclin = ATEbyNurse.groupby(['ExpectedUnitAtTMT']).agg(f)
 
 
  
