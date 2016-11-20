@@ -2,7 +2,7 @@
 title: "Clinic_results"
 output: html_document
 ---
-
+Getting the results by clinic involves taking the weighted mean of every difference $t^2013$ and $t^2014$ for all the dependent variables. The trick here is weighting by number of consults for substantive reasons: the unit of measurement we're interested in is the pap-smear. Thus, each nurse should be counted as the number of patients she sees. 
 
 ```{r}
 ResultsBYclin<-ddply(ATEbyNurse, .(ExpectedUnitAtTMT),   
